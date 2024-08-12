@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from app.config import config_by_name
 from extensions import db, migrate, jwt, ma
+from app.models.staff import Staff
 
 
 def create_app(config_name):
@@ -14,6 +15,9 @@ def create_app(config_name):
     ma.init_app(app)
 
     # Register Blueprints
+    from .api.auth import auth_bp
+    app.register_blueprint(auth_bp, url_prefix='/api/v1/auth')
+
     # Other app setup code
 
     # Set up basic route for testing
