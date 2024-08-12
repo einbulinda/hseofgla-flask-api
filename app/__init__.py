@@ -1,5 +1,6 @@
-from flask import Flask
+from flask import Flask, jsonify
 from app.config import config_by_name
+from extensions import db, migrate, jwt, ma
 
 
 def create_app(config_name):
@@ -7,7 +8,26 @@ def create_app(config_name):
     app.config.from_object(config_by_name[config_name])
 
     # Initialize extensions (SQLAlchemy, JWT, etc.)
+    db.init_app(app)
+    migrate.init_app(app, db)
+    jwt.init_app(app)
+    ma.init_app(app)
+
     # Register Blueprints
     # Other app setup code
 
+    # Set up basic route for testing
+    @app.route('/')
+    def index():
+        return jsonify({
+            "message": "Welcome to House of Glamour API."
+        })
+
+    # Error Handler Example
+    @app.errorhandler(404)
+    def nof_found(error):
+        return jsonify({
+            "error": "Not Found",
+            "message": "The requested URL is not found on the server."
+        }), 404
     return app
