@@ -1,6 +1,7 @@
 from flask import jsonify
 from . import auth_bp
 
+
 @auth_bp.route('/login', methods=['POST'])
 def login():
     # Simulate a login process
@@ -15,4 +16,3 @@ def register():
     return jsonify({
         "message": "Registration successful!"
     })
-
