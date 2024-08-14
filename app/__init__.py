@@ -21,15 +21,6 @@ def create_app(config_name):
     app.register_blueprint(auth_bp, url_prefix='/api/v1/auth')
     app.register_blueprint(staff_bp, url_prefix='/api/v1/staff')
 
-    # Other app setup code
-
-    # Set up basic route for testing
-    @app.route('/')
-    def index():
-        return jsonify({
-            "message": "Welcome to House of Glamour API."
-        })
-
     # Error Handler Example
     @app.errorhandler(404)
     def nof_found(error):

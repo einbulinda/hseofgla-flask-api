@@ -63,20 +63,41 @@ class StaffService:
             return None, f"An error occurred: {str(e)}"
 
     @staticmethod
-    def update_staff(staff_id, name=None, role=None, mobile_number=None, email=None, username=None, password=None, updated_by=None):
+    def update_staff(staff_id, name=None, role=None, mobile_number=None, email=None, updated_by=None):
         """
         Update an existing staff member and/or their login details.
-        :param staff_id:
-        :param name:
-        :param role:
-        :param mobile_number:
-        :param email:
-        :param username:
-        :param password:
-        :param updated_by:
-        :return:
+        :param staff_id: ID of the staff member to update
+        :param name: New name of the staff member
+        :param role: New role of the staff
+        :param mobile_number: New mobile number of the staff
+        :param email: New email of the staff member
+        :param updated_by: ID of user who is updating the staff member
+        :return: Updated staff member and an optional error message.
         """
-        pass
+        try:
+            # Fetch the staff member
+            staff = Staff.query.get(staff_id)
+            if not staff:
+                return None, f"Staff with ID {staff_id} not found."
+
+            # Update fields
+            if name:
+                staff.name = name
+            if role:
+                staff.role = role
+            if mobile_number:
+                staff.mobile_number = mobile_number
+            if email:
+                if Staff.query.filter_by(email=email).first() and staff.email != email:
+                    return None, "Email already exists."
+                staff.email = email
+
+            staff.updated_by = updated_by
+            db.session.commit()
+            return staff, None
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            return None, f"An error occurred: {str(e)}"
 
     @staticmethod
     def get_staff_by_id(staff_id):
@@ -94,7 +115,3 @@ class StaffService:
         :return: A list of all staff members.
         """
         return Staff.query.all()
-
-    @staticmethod
-    def delete_staff(staff_id):
-        pass
