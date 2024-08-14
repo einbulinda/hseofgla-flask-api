@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask
 from app.config import config_by_name
 from app.extensions import db, migrate, jwt, ma
 from app.models.staff import Staff
@@ -15,17 +15,18 @@ def create_app(config_name):
     ma.init_app(app)
 
     # Register Blueprints
-    from .api.auth import auth_bp
+    # from .api.auth import auth_bp
     from .api.staff import staff_bp
 
-    app.register_blueprint(auth_bp, url_prefix='/api/v1/auth')
+    # app.register_blueprint(auth_bp, url_prefix='/api/v1/auth')
     app.register_blueprint(staff_bp, url_prefix='/api/v1/staff')
 
     # Error Handler Example
-    @app.errorhandler(404)
-    def nof_found(error):
-        return jsonify({
-            "error": "Not Found",
-            "message": "The requested URL is not found on the server."
-        }), 404
+
+    # @app.errorhandler(404)
+    # def nof_found(error):
+    #     return jsonify({
+    #         "error": "Not Found",
+    #         "message": "The requested URL is not found on the server."
+    #     }), 404
     return app
