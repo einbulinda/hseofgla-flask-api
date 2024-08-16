@@ -50,6 +50,30 @@ class StaffRoutesTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertIn('Staff member not found', str(response.data))
 
+    # API Responses (Format & Status Codes)
+    def test_api_response_time(self):
+        response = self.client.get(url_for('staff.get_staff_list'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content_type, 'application/json')
+
+    # Performance Testing (Load Testing and Response Time)
+    def test_response_time(self):
+        with self.client as client:
+            import time
+            start_time = time.time()
+            response = client.get(url_for('staff.get_staff_list'))
+            end_time = time.time()
+            self.assertTrue(end_time - start_time < 1)  # Response should be under 1 second.
+
+    # Security (SQL Injection and XSS)
+    def test_sql_injection(self):
+        malicious_input = "'; DROP TABLE dev.staff; --"
+        response = self.client.post(url_for('staff.create_staff'), data={'name': malicious_input})
+        self.assertEqual(response.status_code, 400)  # Bad request.
+
+    # Integration Testing
+
+
 
 if __name__ == '__main__':
     unittest.main()

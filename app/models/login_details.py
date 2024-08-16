@@ -1,4 +1,5 @@
 from app.extensions import db
+from werkzeug.security import check_password_hash, generate_password_hash
 from app.models.customer import Customer
 
 
@@ -23,6 +24,12 @@ class LoginDetails(db.Model):
     customer = db.relationship('Customer', foreign_keys=[customer_id], overlaps="customer_account,login_details")
     creator = db.relationship('Staff', foreign_keys=[created_by], post_update=True, overlaps="updator")
     updator = db.relationship('Staff', foreign_keys=[updated_by], post_update=True, overlaps="creator")
+
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+
+    def check_password(self,password):
+        return check_password_hash(self.password, password)
 
     def __repr__(self):
         return f'<LoginDetails {self.username}>'

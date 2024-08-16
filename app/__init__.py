@@ -15,10 +15,10 @@ def create_app(config_name):
     ma.init_app(app)
 
     # Register Blueprints
-    # from .api.auth import auth_bp
+    from .api.auth import auth_bp
     from .api.staff import staff_bp
 
-    # app.register_blueprint(auth_bp, url_prefix='/api/v1/auth')
+    app.register_blueprint(auth_bp, url_prefix='/api/v1/auth')
     app.register_blueprint(staff_bp, url_prefix='/api/v1/staff')
 
     # Error Handler Example
