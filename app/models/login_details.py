@@ -10,7 +10,7 @@ class LoginDetails(db.Model):
     loggin_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     staff_id = db.Column(db.Integer, db.ForeignKey('dev.staff.staff_id'), nullable=False, unique=True)
     customer_id = db.Column(db.Integer, db.ForeignKey('dev.customers.customer_id'), nullable=True)
-    username = db.Column(db.String(255), nullable=True)
+    username = db.Column(db.String(255), nullable=True, index=True)
     password = db.Column(db.String(255), nullable=False)
     failed_attempts = db.Column(db.Integer, nullable=False, default=0)
     is_locked = db.Column(db.Boolean, nullable=False, default=False)
