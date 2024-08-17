@@ -17,9 +17,11 @@ def create_app(config_name):
     # Register Blueprints
     from .api.auth import auth_bp
     from .api.staff import staff_bp
+    from .api.customers import customer_bp
 
     app.register_blueprint(auth_bp, url_prefix='/api/v1/auth')
     app.register_blueprint(staff_bp, url_prefix='/api/v1/staff')
+    app.register_blueprint(customer_bp, url_prefix='/api/v1/customer')
 
     # Error Handler Example
 

@@ -1,6 +1,6 @@
 from flask import request, jsonify
 from . import staff_bp
-from app.services.staff_service import StaffService
+from app.services import StaffService
 
 
 @staff_bp.route('/', methods=['POST'])

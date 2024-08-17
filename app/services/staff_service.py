@@ -1,8 +1,7 @@
 from werkzeug.security import generate_password_hash
 from sqlalchemy.exc import SQLAlchemyError
 from app.extensions import db
-from app.models.login_details import LoginDetails
-from app.models.staff import Staff
+from app.models import LoginDetails, Staff
 
 
 class StaffService:

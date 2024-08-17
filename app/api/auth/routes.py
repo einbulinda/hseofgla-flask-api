@@ -3,7 +3,7 @@ from werkzeug.security import check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required
 from app.extensions import db
 from . import auth_bp
-from app.models.login_details import LoginDetails
+from app.models import LoginDetails, Staff
 
 MAX_FAILED_ATTEMPTS = 5
 
@@ -35,12 +35,16 @@ def login():
 
     if user.staff_id:
         user_id = f"staff: {user.staff_id}"
+        staff = Staff.query.filter_by(staff_id = user_id).first()
+        role = staff.role
     else:
         user_id = f"customer: {user.customer_id}"
+        role = "customer"
 
     print(user_id)  # Remove in production
+    print(role)
 
-    access_token = create_access_token(identity=user_id)
+    access_token = create_access_token(identity=user_id, additional_claims={"role": role})
     return jsonify({"access_token": access_token}), 200
 
 

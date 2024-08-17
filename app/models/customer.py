@@ -6,8 +6,8 @@ from sqlalchemy import CheckConstraint
 class Customer(db.Model):
     __tablename__ = 'customers'
     __table_args__ = (
-        {'schema': 'dev'},
-        CheckConstraint('credit_balance >= 0', name='check_credit_balance_non_negative')
+        CheckConstraint('credit_balance >= 0', name='check_credit_balance_non_negative'),
+        {'schema': 'dev'}
     )
 
     customer_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
