@@ -2,6 +2,7 @@ from flask import Flask
 from app.config import config_by_name
 from app.extensions import db, migrate, jwt, ma
 from app.models.staff import Staff
+from app.logging_config import log_config
 
 
 def create_app(config_name):
@@ -13,6 +14,7 @@ def create_app(config_name):
     migrate.init_app(app, db)
     jwt.init_app(app)
     ma.init_app(app)
+    log_config()
 
     # Register Blueprints
     from .api.auth import auth_bp

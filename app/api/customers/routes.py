@@ -1,6 +1,6 @@
 from flask import request, jsonify
 from . import customer_bp
-# from app.utils import staff_required
+from app.utils import roles_required
 from app.services import CustomerService
 
 
@@ -23,7 +23,7 @@ def register_customer():
 
 
 @customer_bp.route('/<int:customer_id>', methods=['PUT'])
-# @staff_required
+@roles_required('staff', 'admin')
 def update_customer(customer_id):
     data = request.get_json()
     updated_customer = CustomerService.update_customer(
@@ -41,7 +41,7 @@ def update_customer(customer_id):
 
 
 @customer_bp.route('/<int:customer_id>', methods=['GET'])
-# @staff_required
+@roles_required('staff', 'admin')
 def get_customer(customer_id):
     customer = CustomerService.get_customer_by_id(customer_id)
     if not customer:
@@ -51,8 +51,7 @@ def get_customer(customer_id):
 
 
 @customer_bp.route('/', methods=['GET'])
-# @staff_required
+@roles_required('staff', 'admin')
 def get_customers():
     customers = CustomerService.get_all_customers()
     return jsonify([customer.to_dict() for customer in customers]), 200
-

@@ -31,5 +31,15 @@ class LoginDetails(db.Model):
     def check_password(self,password):
         return check_password_hash(self.password, password)
 
+    def to_dict(self):
+        return{
+            "loggin_id": self.loggin_id,
+            "staff_id": self.staff_id,
+            "customer_id": self.customer_id,
+            "username": self.username,
+            "failed_attempts": self.failed_attempts,
+            "is_locked": self.is_locked
+        }
+
     def __repr__(self):
         return f'<LoginDetails {self.username}>'
