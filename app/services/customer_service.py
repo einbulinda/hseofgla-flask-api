@@ -2,7 +2,6 @@ from app.models import LoginDetails, Customer
 from werkzeug.security import generate_password_hash
 from sqlalchemy.exc import SQLAlchemyError
 from app.extensions import db
-from flask import current_app
 
 
 class CustomerService:
