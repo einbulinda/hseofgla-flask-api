@@ -22,7 +22,7 @@ class Category(db.Model):
         return f'<Category {self.category_name}>'
 
     def to_dict(self):
-        return{
+        return {
             "category_id": self.category_id,
             "category_name": self.category_name,
             "parent_category_id": self.parent_category_id,
