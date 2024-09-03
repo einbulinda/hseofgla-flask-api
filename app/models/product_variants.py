@@ -1,35 +1,34 @@
 from app.extensions import db
 
 
-class Product(db.Model):
-    __tablename__ = 'products'
+class ProductVariants(db.Model):
+    __tablename__ = 'product_variants'
     __table_args__ = {"schema": "dev"}
 
-    product_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    product_name = db.Column(db.String(255), nullable=False)
-    category_id = db.Column(db.Integer, db.ForeignKey('dev.categories.category_id'), nullable=False)
-    is_active = db.Column(db.Boolean, nullable=False, default=True)
-    created_by = db.Column(db.Integer, db.ForeignKey('dev.staff.staff_id'), nullable=True)
+    variant_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('dev.products.product_id'), nullable=False)
+    sku = db.Column(db.String(255), nullable=False, unique=True)
+    price = db.Column(db.Numeric, nullable=False)
+    created_by = db.Column(db.Integer, db.ForeignKey('dev.staff.staff_id'), nullable=False)
     created_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     updated_by = db.Column(db.Integer, db.ForeignKey('dev.staff.staff_id'), nullable=True)
     updated_date = db.Column(db.DateTime, nullable=True, onupdate=db.func.current_timestamp())
 
     # Relationships
-    category = db.relationship('Category', backref='products', foreign_keys=[category_id])
+    product = db.relationship('Product', backref='variants', foreign_keys=[product_id])
     creator = db.relationship('Staff', foreign_keys=[created_by], post_update=True, overlaps="updater")
     updater = db.relationship('Staff', foreign_keys=[updated_by], post_update=True, overlaps="creator")
-    variants = db.relationship('ProductVariant', backref='product', lazy=True)
 
     def __repr__(self):
-        return f'<Product {self.product_name}>'
+        return f'<ProductVariant SKU: {self.sku}, Price: {self.price}>'
 
     def to_dict(self):
         return {
+            "variant_id": self.variant_id,
             "product_id": self.product_id,
-            "product_name": self.product_name,
-            "category_id": self.category_id,
-            "is_active": self.is_active,
-            "created_by": self.created_by.isoformat(),
+            "sku": self.sku,
+            "price": float(self.price),
+            "created_by": self.created_by,
             "created_date": self.created_date.isoformat(),
             "updated_by": self.updated_by,
             "updated_date": self.updated_date.isoformat() if self.updated_date else None
