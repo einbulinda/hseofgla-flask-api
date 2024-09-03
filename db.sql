@@ -91,8 +91,8 @@ CREATE TABLE dev.inventory (
 CREATE TABLE dev.product_attributes (
     attribute_id SERIAL PRIMARY KEY,
     variant_id INT,
-    name VARCHAR(50),
-    value VARCHAR(50),
+    name VARCHAR(50) NOT NULL,
+    value VARCHAR(50) NOT NULL,
     created_by INT,
 	created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updated_by INT,
