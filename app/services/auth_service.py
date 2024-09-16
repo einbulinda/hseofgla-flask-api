@@ -21,7 +21,6 @@ class AuthService:
 
         return user
 
-    @staticmethod
     def login_user(self, username, password):
         user = AuthService.get_loggin_details(username)
 

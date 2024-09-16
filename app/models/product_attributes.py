@@ -15,7 +15,7 @@ class ProductAttributes(db.Model):
     updated_date = db.Column(db.DateTime, nullable=True, onupdate=db.func.current_timestamp())
 
     # Relationships
-    variant = db.relationship('ProductVariant', backref='attributes', foreign_keys=[variant_id])
+    variant = db.relationship('ProductVariants', backref='variant_attributes', foreign_keys=[variant_id])
     creator = db.relationship('Staff', foreign_keys=[created_by], post_update=True, overlaps="updater")
     updater = db.relationship('Staff', foreign_keys=[updated_by], post_update=True, overlaps="creator")
 
@@ -25,11 +25,6 @@ class ProductAttributes(db.Model):
     def to_dict(self):
         return {
             "attribute_id": self.attribute_id,
-            "variant_id": self.variant_id,
             "name": self.name,
             "value": self.value,
-            "created_by": self.created_by,
-            "created_date": self.created_date.isoformat(),
-            "updated_by": self.updated_by,
-            "updated_date": self.updated_date.isoformat() if self.updated_date else None
         }

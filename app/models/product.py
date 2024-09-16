@@ -15,22 +15,26 @@ class Product(db.Model):
     updated_date = db.Column(db.DateTime, nullable=True, onupdate=db.func.current_timestamp())
 
     # Relationships
-    category = db.relationship('Category', backref='products', foreign_keys=[category_id])
+    category = db.relationship('Category', backref='product', foreign_keys=[category_id])
     creator = db.relationship('Staff', foreign_keys=[created_by], post_update=True, overlaps="updater")
     updater = db.relationship('Staff', foreign_keys=[updated_by], post_update=True, overlaps="creator")
-    variants = db.relationship('ProductVariant', backref='product', lazy=True)
+    variants = db.relationship('ProductVariants', back_populates='product', lazy='dynamic')
 
     def __repr__(self):
         return f'<Product {self.product_name}>'
 
     def to_dict(self):
+        """
+        Converts product and its related data(variants, attributes and inventory) to dictionary
+        """
         return {
             "product_id": self.product_id,
             "product_name": self.product_name,
-            "category_id": self.category_id,
+            "category": self.category.to_dict() if self.category else None,
             "is_active": self.is_active,
-            "created_by": self.created_by.isoformat(),
+            "created_by": self.created_by,
             "created_date": self.created_date.isoformat(),
             "updated_by": self.updated_by,
-            "updated_date": self.updated_date.isoformat() if self.updated_date else None
+            "updated_date": self.updated_date.isoformat() if self.updated_date else None,
+            "variants": [variant.to_dict() for variant in self.variants]
         }

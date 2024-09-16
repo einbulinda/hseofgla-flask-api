@@ -2,6 +2,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from app.models import Category, Staff
 from app.extensions import db
 from flask import jsonify
+import logging
 
 
 class CategoryService:
@@ -22,10 +23,12 @@ class CategoryService:
             )
             db.session.add(new_category)
             db.session.commit()
+            logging.info("Category created successfully")
 
             return new_category, None
         except SQLAlchemyError as e:
             db.session.rollback()
+            logging.error(e)
             return None, f'An error has occurred: {str(e)}'
 
     @staticmethod

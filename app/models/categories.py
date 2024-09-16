@@ -25,9 +25,9 @@ class Category(db.Model):
         return {
             "category_id": self.category_id,
             "category_name": self.category_name,
-            "parent_category_id": self.parent_category_id,
-            "created_by": self.created_by,
-            "created_date": self.created_date.isoformat(),
-            "updated_by": self.updated_by,
-            "updated_date": self.updated_date.isoformat() if self.updated_date else None
+            "parent_category": self.parent_category.category_name if self.parent_category else None
+            # "created_by": self.created_by,
+            # "created_date": self.created_date.isoformat(),
+            # "updated_by": self.updated_by,
+            # "updated_date": self.updated_date.isoformat() if self.updated_date else None
         }

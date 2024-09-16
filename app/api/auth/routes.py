@@ -4,13 +4,15 @@ from app.utils import roles_required
 from app.services.auth_service import AuthService
 from . import auth_bp
 
+auth_service = AuthService()
+
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.json
     username = data.get('username')
     password = data.get('password')
-    return AuthService.login_user(username, password)
+    return auth_service.login_user(username, password)
 
 
 @auth_bp.route('/logout', methods=['POST'])
@@ -20,10 +22,10 @@ def logout():
     return jsonify({"message": "Logged out successfully"}), 200
 
 
-@auth_bp.route('/reset/<int:loggin_id>', method=['PUT'])
+@auth_bp.route('/reset/<int:loggin_id>', methods=['PUT'])
 @roles_required('admin')
 def reset_user(loggin_id):
-    message, error = AuthService.reset_user(loggin_id)
+    message, error = auth_service.reset_user(loggin_id)
     if error:
         return jsonify({"error": error}), 400
     return jsonify({"message": message}), 200
