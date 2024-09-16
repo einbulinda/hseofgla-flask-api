@@ -1,7 +1,6 @@
 from sqlalchemy.exc import SQLAlchemyError
-from app.models import Category, Staff
+from app.models import Category
 from app.extensions import db
-from flask import jsonify
 import logging
 
 
@@ -28,7 +27,6 @@ class CategoryService:
             return new_category, None
         except SQLAlchemyError as e:
             db.session.rollback()
-            logging.error(e)
             return None, f'An error has occurred: {str(e)}'
 
     @staticmethod

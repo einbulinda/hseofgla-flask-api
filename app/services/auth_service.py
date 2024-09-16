@@ -39,11 +39,11 @@ class AuthService:
         db.session.commit()
 
         if user.staff_id:
-            user_id = f"staff: {user.staff_id}"
+            user_id = user.staff_id
             staff = Staff.query.filter_by(staff_id=user.staff_id).first()
             role = staff.role.lower()
         else:
-            user_id = f"customer: {user.customer_id}"
+            user_id = user.customer_id
             role = "customer"
         access_token = create_access_token(identity=user_id, additional_claims={"role": role})
         return jsonify({"access_token": access_token}), 200

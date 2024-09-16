@@ -1,4 +1,5 @@
 from flask import request, jsonify
+from flask_jwt_extended import get_jwt_identity
 from . import product_bp
 from app.utils import roles_required
 from app.services import ProductService
@@ -40,4 +41,23 @@ def get_product(product_id):
     return jsonify(product.to_dict()), 200
 
 
+@product_bp.route('/<int:product_id>', methods=['PUT'])
+@roles_required('admin')
+def update_product(product_id):
+    update_data = request.get_json()
 
+    # Extract user identity from JWT claims
+    current_user = get_jwt_identity()
+
+    # Add infor to update_data
+    update_data['updated_by'] = current_user
+
+    product, error = ProductService.update_product(product_id, update_data)
+
+    if error:
+        return jsonify({"error": error}), 400
+
+    return jsonify({
+        "message": "Product updated successfully",
+        "product": product.to_dict()
+    })

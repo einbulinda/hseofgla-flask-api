@@ -7,7 +7,10 @@
     <list default="true" id="79ed2a3b-78d6-438e-93f9-b19133f9ba4b" name="Changes" comment="Initial commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/products/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/products/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/auth_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/auth_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/category_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/category_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/services/product_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/product_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +42,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "Python.product_service.executor": "Run",
+    "Python.routes.executor": "Run",
     "Python.run.executor": "Run",
     "Python.staff_service.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
