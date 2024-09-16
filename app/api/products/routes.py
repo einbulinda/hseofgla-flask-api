@@ -31,3 +31,13 @@ def get_products():
         "products": products
     }), 200
 
+
+@product_bp.route('/<int:product_id>', methods=['GET'])
+def get_product(product_id):
+    product, error = ProductService.get_product(product_id)
+    if error:
+        return jsonify({"error": error}), 400
+    return jsonify(product.to_dict()), 200
+
+
+

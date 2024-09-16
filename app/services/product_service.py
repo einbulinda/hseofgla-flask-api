@@ -70,8 +70,14 @@ class ProductService:
             return None, f"An error has occurred: {str(e)}"
 
     @staticmethod
-    def get_by_id(product_id):
-        pass
+    def get_product(product_id):
+        try:
+            product = Product.query.get(product_id)
+            if not product:
+                return None, "Product not found."
+            return product, None
+        except SQLAlchemyError as e:
+            return None, f'An error has occurred: {str(e)}'
 
     @staticmethod
     def update_product():
