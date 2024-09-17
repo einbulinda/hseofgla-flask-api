@@ -19,6 +19,7 @@ def create_category():
 
 
 @category_bp.route('/<int:category_id>', methods=['PUT'])
+@roles_required('admin')
 def update_category(category_id):
     data = request.get_json()
     category_name = data.get('category_name')
@@ -34,6 +35,7 @@ def update_category(category_id):
 
 
 @category_bp.route('/', methods=['GET'])
+@roles_required('admin')
 def get_all_categories():
     categories, error = CategoryService.get_all_categories()
     if error:
