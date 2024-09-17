@@ -15,7 +15,7 @@ class Customer(db.Model):
     mobile_number = db.Column(db.String(15), nullable=True)
     email = db.Column(db.String(255), nullable=True, unique=True)
     credit_balance = db.Column(db.Numeric, nullable=False, default=0)
-    created_by = db.Column(db.Integer, db.ForeignKey('dev.staff.staff_id'), nullable=True)
+    created_by = db.Column(db.Integer, db.ForeignKey('dev.staff.staff_id'), nullable=False)
     created_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     updated_by = db.Column(db.Integer, db.ForeignKey('dev.staff.staff_id'), nullable=True)
     updated_date = db.Column(db.DateTime, nullable=True, onupdate=db.func.current_timestamp())

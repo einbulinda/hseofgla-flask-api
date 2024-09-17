@@ -159,8 +159,8 @@ CREATE TABLE dev.order_items (
 CREATE TABLE dev.discounts (
     discount_id SERIAL PRIMARY KEY,
     discount_name VARCHAR(255) NOT NULL,
-	product_id INT NULL,
-	variant_id INT NULL,
+	product_id INT NOT NULL,
+	variant_id INT NOT NULL,
     discount_rate NUMERIC,
     discount_amount NUMERIC,
     start_date DATE NOT NULL,
