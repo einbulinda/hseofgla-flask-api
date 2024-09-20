@@ -12,7 +12,7 @@ class Discount(db.Model):
     discount_rate = db.Column(db.Numeric, nullable=False, default=0)
     discount_amount = db.Column(db.Numeric, nullable=False, default=0)
     start_date = db.Column(db.Date, nullable=False)
-    expiry_date = db.Column(db.date, nullable=False)
+    expiry_date = db.Column(db.Date, nullable=False)
     description = db.Column(db.String, nullable=True)
     created_by = db.Column(db.Integer, db.ForeignKey('dev.staff.staff_id'), nullable=False)
     created_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
@@ -20,10 +20,10 @@ class Discount(db.Model):
     updated_date = db.Column(db.DateTime, nullable=True, onupdate=db.func.current_timestamp())
 
     # Relationships
-    product = db.Relationship('Product', backref=db.backref('discounts'), lazy=True)
-    variant = db.Relationship('ProductVariants', backref=db.backref('discounts', lazy=True))
-    creator = db.Relationship('Staff', foreign_keys=[created_by], post_update=True, overlaps="updator")
-    updator = db.Relationship('Staff', foreign_keys=[updated_by], post_update=True, overlaps="creator")
+    product = db.relationship('Product', backref='discounts', lazy=True)
+    variant = db.relationship('ProductVariants', backref='variant_discounts', foreign_keys=[variant_id])
+    creator = db.relationship('Staff', foreign_keys=[created_by], post_update=True, overlaps="updator")
+    updator = db.relationship('Staff', foreign_keys=[updated_by], post_update=True, overlaps="creator")
 
     def __repr__(self):
         return f'Discount {self.discount_name}: {self.discount_rate or self.discount_amount}>'

@@ -6,5 +6,6 @@ from .staff import Staff
 from .login_details import LoginDetails
 from .customer import Customer
 from .categories import Category
+from .discounts import Discount
 
-all_models = [Staff, Customer, LoginDetails, Category, Product, ProductVariants, ProductAttributes, Inventory]
+all_models = [Staff, Customer, LoginDetails, Category, Product, ProductVariants, ProductAttributes, Inventory, Discount]

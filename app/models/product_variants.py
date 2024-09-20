@@ -18,6 +18,7 @@ class ProductVariants(db.Model):
     product = db.relationship('Product', back_populates='variants')
     attributes = db.relationship('ProductAttributes', backref='product_variant', lazy='dynamic')
     inventory = db.relationship('Inventory', uselist=False, backref='inventory_variant')
+    discounts = db.relationship('Discount', backref='variant_discounts', lazy=True)
     creator = db.relationship('Staff', foreign_keys=[created_by], post_update=True, overlaps="updater")
     updater = db.relationship('Staff', foreign_keys=[updated_by], post_update=True, overlaps="creator")
 
@@ -34,7 +35,8 @@ class ProductVariants(db.Model):
             "sku": self.sku,
             "price": float(self.price),
             'attributes': [attribute.to_dict() for attribute in self.attributes],
-            'inventory': self.inventory.to_dict() if self.inventory else None
+            'inventory': self.inventory.to_dict() if self.inventory else None,
+            'discounts': [discount.to_dict() for discount in self.discounts]
             # "created_by": self.created_by,
             # "created_date": self.created_date.isoformat(),
             # "updated_by": self.updated_by,
