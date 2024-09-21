@@ -14,7 +14,7 @@ class Customer(db.Model):
     name = db.Column(db.String(255), nullable=False)
     mobile_number = db.Column(db.String(15), nullable=True)
     email = db.Column(db.String(255), nullable=True, unique=True)
-    credit_balance = db.Column(db.Numeric, nullable=False, default=0)
+    outstanding_balance = db.Column(db.Numeric, nullable=False, default=0)
     created_by = db.Column(db.Integer, db.ForeignKey('dev.staff.staff_id'), nullable=False)
     created_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     updated_by = db.Column(db.Integer, db.ForeignKey('dev.staff.staff_id'), nullable=True)
@@ -40,7 +40,7 @@ class Customer(db.Model):
             "name": self.name,
             "mobile_number": self.mobile_number,
             "email": self.email,
-            "credit_balance": float(self.credit_balance),
+            "outstanding_balance": float(self.outstanding_balance),
             "created_by": self.created_by,
             "created_date": self.created_date.isoformat(),
             "updated_by": self.updated_by,

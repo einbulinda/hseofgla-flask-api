@@ -108,7 +108,7 @@ CREATE TABLE dev.customers (
     name VARCHAR(255) NOT NULL,
 	mobile_number VARCHAR(15),
 	email VARCHAR(255),
-    credit_balance NUMERIC DEFAULT 0,
+    outstanding_balance NUMERIC DEFAULT 0,
 	created_by INT,
 	created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updated_by INT,

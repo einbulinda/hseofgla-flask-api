@@ -17,12 +17,7 @@ def create_app(config_name):
     log_config()
 
     # Register Blueprints
-    from .api.auth import auth_bp
-    from .api.staff import staff_bp
-    from .api.customers import customer_bp
-    from .api.categories import category_bp
-    from .api.products import product_bp
-    from .api.discounts import discounts_bp
+    from .api import auth_bp, staff_bp, customer_bp, category_bp, product_bp, discounts_bp, orders_bp
 
     app.register_blueprint(auth_bp, url_prefix='/api/v1/auth')
     app.register_blueprint(staff_bp, url_prefix='/api/v1/staff')
@@ -30,6 +25,7 @@ def create_app(config_name):
     app.register_blueprint(category_bp, url_prefix='/api/v1/category')
     app.register_blueprint(product_bp, url_prefix='/api/v1/product')
     app.register_blueprint(discounts_bp, url_prefix='api/v1/discounts')
+    app.register_blueprint(orders_bp, url_prefix='api/v1/order')
 
     # Error Handler Example
 
