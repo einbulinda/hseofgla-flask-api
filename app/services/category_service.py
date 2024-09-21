@@ -1,11 +1,9 @@
 from sqlalchemy.exc import SQLAlchemyError
 from app.models import Category
 from app.extensions import db
-import logging
 
 
 class CategoryService:
-
     @staticmethod
     def create_category(category_name, created_by, parent_category_id=None):
         try:
@@ -22,8 +20,6 @@ class CategoryService:
             )
             db.session.add(new_category)
             db.session.commit()
-            logging.info("Category created successfully")
-
             return new_category, None
         except SQLAlchemyError as e:
             db.session.rollback()
@@ -50,7 +46,6 @@ class CategoryService:
                 category_exists = Category.query.filter_by(category_name=category_name.lower()).first()
                 if category_exists and category_exists.category_id != category_id:
                     return None, "Category name already exists."
-
                 category.category_name = category_name
 
             if parent_category_id is not None:

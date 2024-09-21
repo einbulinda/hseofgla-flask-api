@@ -16,7 +16,7 @@ def create_product():
 
     return jsonify({
         "message": "Product created successfully",
-        "product": new_product.to_dict()
+        "data": new_product.to_dict()
     }), 201
 
 
@@ -28,8 +28,7 @@ def get_products():
         return jsonify({"error": error}), 400
 
     return jsonify({
-        "message": "Products fetched successfully",
-        "products": products
+        "data": products
     }), 200
 
 
@@ -38,7 +37,7 @@ def get_product(product_id):
     product, error = ProductService.get_product(product_id)
     if error:
         return jsonify({"error": error}), 400
-    return jsonify(product.to_dict()), 200
+    return jsonify({"data": product.to_dict()}), 200
 
 
 @product_bp.route('/<int:product_id>', methods=['PUT'])
@@ -59,5 +58,5 @@ def update_product(product_id):
 
     return jsonify({
         "message": "Product updated successfully",
-        "product": product.to_dict()
+        "data": product.to_dict()
     })

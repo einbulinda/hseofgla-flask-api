@@ -22,12 +22,14 @@ def create_app(config_name):
     from .api.customers import customer_bp
     from .api.categories import category_bp
     from .api.products import product_bp
+    from .api.discounts import discounts_bp
 
     app.register_blueprint(auth_bp, url_prefix='/api/v1/auth')
     app.register_blueprint(staff_bp, url_prefix='/api/v1/staff')
     app.register_blueprint(customer_bp, url_prefix='/api/v1/customer')
     app.register_blueprint(category_bp, url_prefix='/api/v1/category')
     app.register_blueprint(product_bp, url_prefix='/api/v1/product')
+    app.register_blueprint(discounts_bp, url_prefix='api/v1/discounts')
 
     # Error Handler Example
 

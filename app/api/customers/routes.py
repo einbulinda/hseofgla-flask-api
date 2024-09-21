@@ -19,7 +19,10 @@ def register_customer():
     if error:
         return jsonify({"error": error}), 400
 
-    return jsonify(customer.to_dict()), 201
+    return jsonify({
+        "message": "Customer created successfully",
+        "data": customer.to_dict()
+    }), 201
 
 
 @customer_bp.route('/<int:customer_id>', methods=['PUT'])
@@ -37,7 +40,10 @@ def update_customer(customer_id):
     if not updated_customer:
         return jsonify({"error": "Customer not found."}), 404
 
-    return jsonify(updated_customer.to_dict()), 200
+    return jsonify({
+        "message": "Customer updated successfully.",
+        "data": updated_customer.to_dict()
+    }), 200
 
 
 @customer_bp.route('/<int:customer_id>', methods=['GET'])
@@ -47,11 +53,13 @@ def get_customer(customer_id):
     if not customer:
         return jsonify({"error": "Customer not found"}), 404
 
-    return jsonify(customer.to_dict()), 200
+    return jsonify({"data": customer.to_dict()}), 200
 
 
 @customer_bp.route('/', methods=['GET'])
 @roles_required('staff', 'admin')
 def get_customers():
     customers = CustomerService.get_all_customers()
-    return jsonify([customer.to_dict() for customer in customers]), 200
+    return jsonify({
+        "data": [customer.to_dict() for customer in customers]
+    }), 200
