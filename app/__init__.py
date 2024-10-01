@@ -24,8 +24,8 @@ def create_app(config_name):
     app.register_blueprint(customer_bp, url_prefix='/api/v1/customer')
     app.register_blueprint(category_bp, url_prefix='/api/v1/category')
     app.register_blueprint(product_bp, url_prefix='/api/v1/product')
-    app.register_blueprint(discounts_bp, url_prefix='api/v1/discounts')
-    app.register_blueprint(orders_bp, url_prefix='api/v1/order')
+    app.register_blueprint(discounts_bp, url_prefix='/api/v1/discounts')
+    app.register_blueprint(orders_bp, url_prefix='/api/v1/order')
 
     # Error Handler Example
 
