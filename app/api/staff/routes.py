@@ -1,9 +1,11 @@
 from flask import request, jsonify
+from app.utils import roles_required
 from . import staff_bp
 from app.services import StaffService
 
 
 @staff_bp.route('/', methods=['POST'])
+@roles_required('admin')
 def create_staff():
     data = request.get_json()
     name = data.get('name')
@@ -22,6 +24,7 @@ def create_staff():
 
 
 @staff_bp.route('/<int:staff_id>', methods=['PUT'])
+@roles_required('admin')
 def update_staff(staff_id):
     data = request.get_json()
     name = data.get('name')
@@ -38,6 +41,7 @@ def update_staff(staff_id):
 
 
 @staff_bp.route('/<int:staff_id>', methods=['GET'])
+@roles_required('admin')
 def get_staff(staff_id):
     try:
         staff = StaffService.get_staff_by_id(staff_id)
@@ -64,6 +68,7 @@ def get_staff(staff_id):
 
 
 @staff_bp.route('/', methods=['GET'])
+@roles_required('admin')
 def get_staff_list():
     try:
         staff_list = StaffService.get_all_staff()
