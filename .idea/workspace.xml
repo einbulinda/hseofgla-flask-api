@@ -5,9 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="79ed2a3b-78d6-438e-93f9-b19133f9ba4b" name="Changes" comment="Merging origin with local changes">
-      <change afterPath="$PROJECT_DIR$/Project.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/schemas/auth_schema.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/schemas/category_schema.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/schemas/customer_schema.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/schemas/product_schema.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/schemas/staff_schema.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/hseofgla_flask_api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/hseofgla_flask_api.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/auth/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/auth/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/categories/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/categories/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/customers/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/customers/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/orders/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/orders/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/products/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/products/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/staff/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/staff/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/order_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/order_service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +69,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "E:/projects/hseofgla_flask_api/hseofgla_flask_api"
+    "last_opened_file_path": "E:/projects/hseofgla_flask_api"
   }
 }]]></component>
   <component name="RecentsManager">

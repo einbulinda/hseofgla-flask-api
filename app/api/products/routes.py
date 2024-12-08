@@ -3,12 +3,17 @@ from flask_jwt_extended import get_jwt_identity
 from . import product_bp
 from app.utils import roles_required
 from app.services import ProductService
+from app.schemas.product_schema import ProductSchema
 
 
 @product_bp.route('/', methods=['POST'])
 @roles_required('admin')
 def create_product():
     product_data = request.get_json()
+    errors = ProductSchema.validate_input(product_data)
+    if errors:
+        return jsonify({"error": errors}), 400
+
     new_product, error = ProductService.add_product(product_data)
 
     if error:
@@ -44,6 +49,9 @@ def get_product(product_id):
 @roles_required('admin')
 def update_product(product_id):
     update_data = request.get_json()
+    errors = ProductSchema.validate_input(update_data)
+    if errors:
+        return jsonify({"error": errors}), 400
 
     # Extract user identity from JWT claims
     current_user = get_jwt_identity()

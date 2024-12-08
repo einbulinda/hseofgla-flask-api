@@ -23,7 +23,7 @@ class OrderService:
 
             customer = Customer.query.get(customer_id)
             if not customer:
-                return None, "Customer not found."
+                return None, "Customer not found.", 404
 
             new_order = Order(
                 customer_id=customer_id,
@@ -48,11 +48,11 @@ class OrderService:
                 inventory = Inventory.query.filter_by(variant_id=variant_id).first()
 
                 if not variant or not inventory:
-                    return None, f"Product variant for ID: {variant_id} not found in store!"
+                    return None, f"Product variant for ID: {variant_id} not found in store!", 404
 
                 # Check availability of stock
                 if inventory.quantity < quantity:
-                    return None, f'Insufficient inventory for Product Variant: {variant_id}. Available stock is {inventory.quantity}'
+                    return None, f'Insufficient inventory for Product Variant: {variant_id}. Available stock is {inventory.quantity}', 409
 
                 # Deduct the ordered quantity:
                 inventory.quantity -= quantity
@@ -73,7 +73,48 @@ class OrderService:
             # Update Customer Balances
             customer.outstanding_balance += order_total_amount
             db.session.commit()
-            return new_order, None
+            return new_order, None, 201
         except SQLAlchemyError as e:
             db.session.rollback()
-            return None, f"An error occurred while processing the order: {str(e)}"
+            return None, f"An error occurred while processing the order: {str(e)}", 500
+
+    @staticmethod
+    def get_order_by_id(order_id):
+        """
+            Retrieve an order by its ID.
+        """
+        try:
+            order = Order.query.get(order_id)
+            if not order:
+                return None, "Order not found.", 404
+            return order, None, 200
+        except SQLAlchemyError as e:
+            return None, f"An error occurred in fetching an order: {str(e)}", 500
+
+    @staticmethod
+    def get_orders():
+        """
+
+        :return: List of all orders in the system
+        """
+        try:
+            orders = Order.query.all()
+            return orders, None, 200
+        except SQLAlchemyError as e:
+            return None, f"An error occurred fetching orders: {str(e)}", 500
+
+    @staticmethod
+    def update_order(order_id, update_data):
+        pass
+
+    @staticmethod
+    def delete_order(order_id):
+        pass
+
+    @staticmethod
+    def process_order(order_id):
+        pass
+
+    @staticmethod
+    def get_customer_orders(customer_id):
+        pass

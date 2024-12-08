@@ -2,11 +2,17 @@ from flask import request, jsonify
 from . import category_bp
 from app.utils import roles_required
 from app.services import CategoryService
+from app.schemas.category_schema import CategorySchema
 
 
 @category_bp.route('/', methods=['POST'])
 def create_category():
     data = request.get_json()
+    errors = CategorySchema.validate_input(data)
+
+    if errors:
+        return jsonify({"errors": errors}), 400
+
     category, error = CategoryService.create_category(
         category_name=data.get('category_name'),
         created_by=data.get('created_by'),
@@ -22,6 +28,11 @@ def create_category():
 @roles_required('admin')
 def update_category(category_id):
     data = request.get_json()
+    errors = CategorySchema.validate_input(data)
+
+    if errors:
+        return jsonify({"errors":errors}), 400
+
     category_name = data.get('category_name')
     updated_by = data.get('updated_by')
     parent_category_id = data.get('parent_category_id')

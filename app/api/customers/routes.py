@@ -2,11 +2,17 @@ from flask import request, jsonify
 from . import customer_bp
 from app.utils import roles_required
 from app.services import CustomerService
+from app.schemas.customer_schema import CustomerSchema
 
 
 @customer_bp.route('/', methods=['POST'])
 def register_customer():
     data = request.get_json()
+    errors = CustomerSchema.validate_input(data)
+
+    if errors:
+        return jsonify({"error": errors}), 400
+
     customer, error = CustomerService.register_customer(
         name=data.get('name'),
         mobile_number=data.get('mobile_number'),
@@ -29,6 +35,11 @@ def register_customer():
 @roles_required('staff', 'admin')
 def update_customer(customer_id):
     data = request.get_json()
+    errors = CustomerSchema.validate_input(data)
+
+    if errors:
+        return jsonify({"error": errors}), 400
+
     updated_customer = CustomerService.update_customer(
         customer_id,
         name=data.get('name'),

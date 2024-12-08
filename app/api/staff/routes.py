@@ -2,12 +2,17 @@ from flask import request, jsonify
 from app.utils import roles_required
 from . import staff_bp
 from app.services import StaffService
+from app.schemas.staff_schema import StaffSchema
 
 
 @staff_bp.route('/', methods=['POST'])
 @roles_required('admin')
 def create_staff():
     data = request.get_json()
+    errors = StaffSchema.validate_input(data)
+    if errors:
+        return jsonify({"error": errors}), 400
+
     name = data.get('name')
     role = data.get('role')
     mobile_number = data.get('mobile_number')
@@ -27,6 +32,10 @@ def create_staff():
 @roles_required('admin')
 def update_staff(staff_id):
     data = request.get_json()
+    errors = StaffSchema.validate_input(data)
+    if errors:
+        return jsonify({"error": errors}), 400
+
     name = data.get('name')
     role = data.get('role')
     mobile_number = data.get('mobile_number')
