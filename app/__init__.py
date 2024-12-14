@@ -27,12 +27,11 @@ def create_app(config_name):
     app.register_blueprint(discounts_bp, url_prefix='/api/v1/discounts')
     app.register_blueprint(orders_bp, url_prefix='/api/v1/order')
 
-    # Error Handler Example
+    # Error Handlers
+    from errors import handle_404_error, handle_400_error, handle_500_error
 
-    # @app.errorhandler(404)
-    # def nof_found(error):
-    #     return jsonify({
-    #         "error": "Not Found",
-    #         "message": "The requested URL is not found on the server."
-    #     }), 404
+    app.register_error_handler(400, handle_400_error)
+    app.register_error_handler(404, handle_404_error)
+    app.register_error_handler(500, handle_500_error)
+
     return app
