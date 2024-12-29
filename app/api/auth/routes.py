@@ -3,6 +3,7 @@ from flask_jwt_extended import jwt_required
 from app.utils import roles_required
 from app.services.auth_service import AuthService
 from app.schemas.auth_schema import AuthSchema
+from app.errors import DetailedErrorResponse
 from . import auth_bp
 
 auth_service = AuthService()
@@ -10,15 +11,20 @@ auth_service = AuthService()
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
-    data = request.json
-    errors = AuthSchema.validate_input(data)
+    try:
+        data = request.json
+        errors = AuthSchema.validate_input(data)
 
-    if errors:
-        return jsonify({"errors": errors}), 400
-    
-    username = data.get('username')
-    password = data.get('password')
-    return auth_service.login_user(username, password)
+        if errors:
+            raise  DetailedErrorResponse(400, "Validation Error", errors)
+
+        username = data.get('username')
+        password = data.get('password')
+        return auth_service.login_user(username, password)
+    except DetailedErrorResponse as error:
+        return error.response, error.code
+    except Exception as e:
+        return DetailedErrorResponse(500, "Unexpected Error", str(e)).response, 500
 
 
 @auth_bp.route('/logout', methods=['POST'])
@@ -31,7 +37,12 @@ def logout():
 @auth_bp.route('/reset/<int:loggin_id>', methods=['PUT'])
 @roles_required('admin')
 def reset_user(loggin_id):
-    message, error = auth_service.reset_user(loggin_id)
-    if error:
-        return jsonify({"error": error}), 400
-    return jsonify({"message": message}), 200
+    try:
+        message, error = auth_service.reset_user(loggin_id)
+        if error:
+            raise DetailedErrorResponse(400, "Validation Error", error)
+        return jsonify({"message": message}), 200
+    except DetailedErrorResponse as error:
+        return error.response, error.code
+    except Exception as e:
+        return DetailedErrorResponse(500, "Unexpected Error", str(e)).response, 500

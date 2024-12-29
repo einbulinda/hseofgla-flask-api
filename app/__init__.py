@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 from app.config import config_by_name
 from app.extensions import db, migrate, jwt, ma
 from app.models.staff import Staff
@@ -27,8 +27,13 @@ def create_app(config_name):
     app.register_blueprint(discounts_bp, url_prefix='/api/v1/discounts')
     app.register_blueprint(orders_bp, url_prefix='/api/v1/order')
 
+    #  Redirect homepage to products resource
+    @app.route('/')
+    def homepage():
+        return redirect(url_for('product.get_products'))
+
     # Error Handlers
-    from errors import handle_404_error, handle_400_error, handle_500_error
+    from .errors import handle_404_error, handle_400_error, handle_500_error
 
     app.register_error_handler(400, handle_400_error)
     app.register_error_handler(404, handle_404_error)

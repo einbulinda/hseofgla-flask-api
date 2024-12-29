@@ -8,7 +8,7 @@ def validate_positive_integer(value):
 
 class CategorySchema(Schema):
     category_name = fields.String(required=True, validate=validate.Length(min=3, max=25, error="Category name must be between 3 to 25 characters"))
-    parent_category_id = fields.Integer(required=True, validate=validate_positive_integer)
+    parent_category_id = fields.Integer(required=False, validate=validate_positive_integer)
     created_by = fields.Integer(required=True, validate=validate_positive_integer)
 
     @staticmethod
